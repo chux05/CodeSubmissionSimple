@@ -1,108 +1,107 @@
 ﻿@page "/QuestionPage"
 @using CodeSubmissionSimple.Client.Services
-<h3>QuestionPage</h3>
 <style>
-    .container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
 
-    .item {
-        width: 48%;
-        height: 100px;
-        margin-bottom: 2%;
-        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-    }
-
-        .item:nth-child(3n) {
-            width: 100%;
-        }
-
-    .top {
-        height: 60vh;
-        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-    }
-
-    .bottom {
-        height: 20vh;
-        box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
-    }
-
-    .btn-container {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-items: center;
+    .outer {
         width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
     }
 
-    #prev {
-        justify-self: flex-start;
+    .wrapper {
+        width: 100%;
+        height: 80%;
+        display: flex;
     }
 
-    #next {
-        justify-self: flex-start;
-    }
-
-    #submit {
-        justify-self: flex-end;
-    }
-
-    }
-
-    textarea {
-        width: 60%;
+    .left {
+        width: 58%;
+        height: 100%;
     }
 
     .right {
         width: 40%;
+        height: 100%;
     }
-</style><label>Temp code : @TempCode</label>
-<div class="container-fluid wrapper">
-    <div class="left">
-        <!--TextArea-->
-        @if (Questions != null)
-        {
-            <textarea @bind="TempCode"></textarea>
-        }
 
-    </div>
-    <div class="border-left right">
-        <!--Question-->
-        @if (Questions != null)
-        {
-            <br>
-            @if (Questions.Count > counter)
+    textarea {
+        width: 100%;
+        height: 100%;
+        margin: 10px;
+        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    }
+
+    .right {
+        padding: 10px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        margin: 5px;
+    }
+
+    .bottom {
+        width: 100%;
+        padding: 10px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    btn, a {
+        margin: 5px;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    }
+
+</style>
+<div class="outer">
+    <div class="wrapper">
+        <div class="left">
+            <!--TextArea-->
+            @if (Questions != null)
             {
-                <p><h4>Question:</h4> <br />@(Questions[counter].Description)</p>
+                <textarea @bind="TempCode"></textarea>
             }
 
-        }
-    </div>
-</div>
-<div class="row bottom">
-    <div class="col-sm-8 buttons btn-container">
-        <!--Buttons-->
-        @if (counter > 0)
-        {
-            <button id="prev" type="button" class="btn  btn-primary btn-lg" @onclick="Previous">Prev</button>
-        }
-        @if (counter < Length - 1)
-        {
-            <button id="next" type="button" class="btn btn-primary btn-lg btn-success" @onclick="Next">Next</button>
-        }
-        else
-        {
-            <button id="submit" type="button" class="btn btn-primary btn-lg btn-success" @onclick="Submit">Submit Your Code</button>
-        }
-    </div>
+        </div>
+        <div class=" right">
+            <!--Question-->
+            @if (Questions != null)
+            {
+                <br>
+                @if (Questions.Count > counter)
+                {
+                    <p><h4>Question:</h4> <br />@(Questions[counter].Description)</p>
+                }
 
+            }
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="col-sm-8 buttons btn-container">
+            <!--Buttons-->
+            @if (counter > 0)
+            {
+                <button id="prev" type="button" class="btn  btn-primary btn-lg" @onclick="Previous">Prev</button>
+            }
+            @if (counter < Length - 1)
+            {
+                <button id="next" type="button" class="btn btn-primary btn-lg btn-success" @onclick="Next">Next</button>
+            }
+            else
+            {
+                <a href="@($"Submission/{Questions}")"
+               class="btn btn-primary m-1">Submit</a>
+            }
+        </div>
+
+    </div>
 </div>
+
 
 @code {
     [Inject]
     IQuestionDataService _qClient { get; set; }
+
+
 
     List<Question> Questions { get; set; } = new List<Question>();
 
@@ -132,9 +131,10 @@
         if (counter >= 0 || counter < Length)
         {
             code = Questions[counter].CodeStub;
-        } else
+        }
+        else
         {
-            
+
         }
         return code;
     }
@@ -158,6 +158,9 @@
     }
     private void Submit()
     {
+        //save code tem
+        Questions[counter].CodeStub = TempCode;
         //navigate to submission page
+
     }
 }

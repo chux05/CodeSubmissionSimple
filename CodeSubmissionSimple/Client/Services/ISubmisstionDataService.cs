@@ -10,6 +10,6 @@ namespace CodeSubmissionSimple.Client.Services
     {
        
         Task<Submission> AddSubmission(Submission Submission);
-        Task UpdateSubmission(Submission Submission);
+      
     }
 }
