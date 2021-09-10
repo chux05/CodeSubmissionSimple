@@ -63,6 +63,7 @@ namespace CodeSubmissionSimple.Server.Migrations
                     TestStatusId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     QuestionId = table.Column<int>(type: "int", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SubmissionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -108,12 +109,12 @@ namespace CodeSubmissionSimple.Server.Migrations
 
             migrationBuilder.InsertData(
                 table: "TestStatuses",
-                columns: new[] { "TestStatusId", "QuestionId", "SubmissionId" },
+                columns: new[] { "TestStatusId", "Code", "QuestionId", "SubmissionId" },
                 values: new object[,]
                 {
-                    { 1, 1, 1 },
-                    { 2, 2, 1 },
-                    { 3, 6, 1 }
+                    { 1, "", 1, 1 },
+                    { 2, "", 2, 1 },
+                    { 3, "", 6, 1 }
                 });
 
             migrationBuilder.CreateIndex(

@@ -27,7 +27,7 @@ namespace CodeSubmissionSimple.Server.Repositories
             //    .FirstOrDefault(s => s.SubmissionId == id);
 
 
-            return await query.AsNoTracking().Include(q => q.Answers).Include(c => c.Candidate).FirstOrDefaultAsync(s => s.SubmissionId == id);
+            return await query.AsNoTracking().Include(q => q.Answers).ThenInclude(s => s.Question).Include(c => c.Candidate).FirstOrDefaultAsync(s => s.SubmissionId == id);
         }
     }
 }

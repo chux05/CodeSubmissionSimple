@@ -126,6 +126,7 @@ namespace CodeSubmissionSimple.Server.Data
             {
                 TestStatusId = 1,
                 QuestionId = 1,
+                Code = "",
                 SubmissionId =1
             });
 
@@ -133,6 +134,7 @@ namespace CodeSubmissionSimple.Server.Data
             {
                 TestStatusId = 2,
                 QuestionId = 2,
+                Code = "",
                 SubmissionId = 1
             });
 
@@ -140,6 +142,7 @@ namespace CodeSubmissionSimple.Server.Data
             {
                 TestStatusId = 3,
                 QuestionId = 6,
+                Code = "",
                 SubmissionId = 1
             });
 
