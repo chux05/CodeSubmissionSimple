@@ -21,6 +21,8 @@ namespace CodeSubmissionSimple.Server.Data
 
         public DbSet<Candidate> Candidates { get; set; }
 
+        public DbSet<TestStatus> TestStatuses { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -125,6 +127,20 @@ namespace CodeSubmissionSimple.Server.Data
                 TestStatusId = 1,
                 QuestionId = 1,
                 SubmissionId =1
+            });
+
+            modelBuilder.Entity<TestStatus>().HasData(new TestStatus
+            {
+                TestStatusId = 2,
+                QuestionId = 2,
+                SubmissionId = 1
+            });
+
+            modelBuilder.Entity<TestStatus>().HasData(new TestStatus
+            {
+                TestStatusId = 3,
+                QuestionId = 6,
+                SubmissionId = 1
             });
 
 

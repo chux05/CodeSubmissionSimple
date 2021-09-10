@@ -12,7 +12,7 @@ namespace CodeSubmissionSimple.Server.Repositories
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         protected readonly ApplicationDbContext _context;
-        private readonly DbSet<T> _db;
+        protected readonly DbSet<T> _db;
 
         public GenericRepository(ApplicationDbContext context)
         {

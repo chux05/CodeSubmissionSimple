@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeSubmissionSimple.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210910075712_Init")]
+    [Migration("20210910113324_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -170,13 +170,25 @@ namespace CodeSubmissionSimple.Server.Migrations
 
                     b.HasIndex("SubmissionId");
 
-                    b.ToTable("TestStatus");
+                    b.ToTable("TestStatuses");
 
                     b.HasData(
                         new
                         {
                             TestStatusId = 1,
                             QuestionId = 1,
+                            SubmissionId = 1
+                        },
+                        new
+                        {
+                            TestStatusId = 2,
+                            QuestionId = 2,
+                            SubmissionId = 1
+                        },
+                        new
+                        {
+                            TestStatusId = 3,
+                            QuestionId = 6,
                             SubmissionId = 1
                         });
                 });

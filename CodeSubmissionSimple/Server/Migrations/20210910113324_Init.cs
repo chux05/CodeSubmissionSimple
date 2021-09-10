@@ -57,7 +57,7 @@ namespace CodeSubmissionSimple.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TestStatus",
+                name: "TestStatuses",
                 columns: table => new
                 {
                     TestStatusId = table.Column<int>(type: "int", nullable: false)
@@ -67,15 +67,15 @@ namespace CodeSubmissionSimple.Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TestStatus", x => x.TestStatusId);
+                    table.PrimaryKey("PK_TestStatuses", x => x.TestStatusId);
                     table.ForeignKey(
-                        name: "FK_TestStatus_Questions_QuestionId",
+                        name: "FK_TestStatuses_Questions_QuestionId",
                         column: x => x.QuestionId,
                         principalTable: "Questions",
                         principalColumn: "QuestionId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TestStatus_Submissions_SubmissionId",
+                        name: "FK_TestStatuses_Submissions_SubmissionId",
                         column: x => x.SubmissionId,
                         principalTable: "Submissions",
                         principalColumn: "SubmissionId",
@@ -107,9 +107,14 @@ namespace CodeSubmissionSimple.Server.Migrations
                 values: new object[] { 1, "chux05@hotmail.com", "Promise", 1, "Email" });
 
             migrationBuilder.InsertData(
-                table: "TestStatus",
+                table: "TestStatuses",
                 columns: new[] { "TestStatusId", "QuestionId", "SubmissionId" },
-                values: new object[] { 1, 1, 1 });
+                values: new object[,]
+                {
+                    { 1, 1, 1 },
+                    { 2, 2, 1 },
+                    { 3, 6, 1 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Candidates_SubmissionId",
@@ -118,13 +123,13 @@ namespace CodeSubmissionSimple.Server.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_TestStatus_QuestionId",
-                table: "TestStatus",
+                name: "IX_TestStatuses_QuestionId",
+                table: "TestStatuses",
                 column: "QuestionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TestStatus_SubmissionId",
-                table: "TestStatus",
+                name: "IX_TestStatuses_SubmissionId",
+                table: "TestStatuses",
                 column: "SubmissionId");
         }
 
@@ -134,7 +139,7 @@ namespace CodeSubmissionSimple.Server.Migrations
                 name: "Candidates");
 
             migrationBuilder.DropTable(
-                name: "TestStatus");
+                name: "TestStatuses");
 
             migrationBuilder.DropTable(
                 name: "Questions");

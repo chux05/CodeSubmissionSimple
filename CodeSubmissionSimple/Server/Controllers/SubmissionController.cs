@@ -55,7 +55,7 @@ namespace CodeSubmissionSimple.Server.Controllers
         {
             try
             {
-                var submission = await _unitOfWork.Submissions.Get(q => q.SubmissionId == id);
+                var submission = await _unitOfWork.Submissions.GetSubmissionWithQuestions(id);
                 var result = _mapper.Map<SubmissionDto>(submission);
                 return Ok(result);
             }

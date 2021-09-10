@@ -168,13 +168,25 @@ namespace CodeSubmissionSimple.Server.Migrations
 
                     b.HasIndex("SubmissionId");
 
-                    b.ToTable("TestStatus");
+                    b.ToTable("TestStatuses");
 
                     b.HasData(
                         new
                         {
                             TestStatusId = 1,
                             QuestionId = 1,
+                            SubmissionId = 1
+                        },
+                        new
+                        {
+                            TestStatusId = 2,
+                            QuestionId = 2,
+                            SubmissionId = 1
+                        },
+                        new
+                        {
+                            TestStatusId = 3,
+                            QuestionId = 6,
                             SubmissionId = 1
                         });
                 });

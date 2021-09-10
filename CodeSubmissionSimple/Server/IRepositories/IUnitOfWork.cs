@@ -9,11 +9,13 @@ namespace CodeSubmissionSimple.Server.IRepositories
     public interface IUnitOfWork : IDisposable
     {
 
-        IGenericRepository<Submission> Submissions { get; }
+        ISubmissionRepository Submissions { get; }
 
         IGenericRepository<Question> Questions { get; }
 
         IGenericRepository<Candidate> Candidates { get; }
+
+        IGenericRepository<TestStatus> TestStatuses { get; }
 
         Task Save();
 

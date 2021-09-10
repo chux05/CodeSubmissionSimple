@@ -12,20 +12,23 @@ namespace CodeSubmissionSimple.Server.Repositories
     {
         private readonly ApplicationDbContext _context;
 
-        private IGenericRepository<Submission> _submissions;
+        private ISubmissionRepository _submissions;
         private IGenericRepository<Question> _questions;
         private IGenericRepository<Candidate> _candidates;
+        private IGenericRepository<TestStatus> _testStatuses;
 
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public IGenericRepository<Submission> Submissions => _submissions ??= new SubmissionRepository(_context);
+        public ISubmissionRepository Submissions => _submissions ??= new SubmissionRepository(_context);
 
         public IGenericRepository<Question> Questions => _questions ??= new GenericRepository<Question>(_context);
 
         public IGenericRepository<Candidate> Candidates => _candidates ??= new GenericRepository<Candidate>(_context);
+
+        public IGenericRepository<TestStatus> TestStatuses => _testStatuses ??= new GenericRepository<TestStatus>(_context);
 
         public void Dispose()
         {

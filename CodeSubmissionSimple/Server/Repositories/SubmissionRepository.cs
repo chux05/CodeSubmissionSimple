@@ -1,4 +1,5 @@
 ﻿using CodeSubmissionSimple.Server.Data;
+using CodeSubmissionSimple.Server.IRepositories;
 using CodeSubmissionSimple.Shared;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CodeSubmissionSimple.Server.Repositories
 {
-    public class SubmissionRepository : GenericRepository<Submission>
+    public class SubmissionRepository : GenericRepository<Submission>, ISubmissionRepository
     {
         
         public SubmissionRepository(ApplicationDbContext context) 
@@ -17,12 +18,16 @@ namespace CodeSubmissionSimple.Server.Repositories
 
         }
 
-        public Submission GetPatientWithStatusDetails(int id)
+        public async Task<Submission> GetSubmissionWithQuestions(int id)
         {
-            return _context.Submissions
-                .Include(q => q.Answers)
-                .Include(c => c.Candidate)
-                .FirstOrDefault(s => s.SubmissionId == id);
+            IQueryable<Submission> query = _db;
+            //_context.Submissions
+            //    .Include(q => q.Answers)
+            //    .Include(c => c.Candidate)
+            //    .FirstOrDefault(s => s.SubmissionId == id);
+
+
+            return await query.AsNoTracking().Include(q => q.Answers).Include(c => c.Candidate).FirstOrDefaultAsync(s => s.SubmissionId == id);
         }
     }
 }
