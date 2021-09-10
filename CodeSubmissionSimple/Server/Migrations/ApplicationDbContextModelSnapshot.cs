@@ -156,6 +156,9 @@ namespace CodeSubmissionSimple.Server.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
@@ -174,18 +177,21 @@ namespace CodeSubmissionSimple.Server.Migrations
                         new
                         {
                             TestStatusId = 1,
+                            Code = "",
                             QuestionId = 1,
                             SubmissionId = 1
                         },
                         new
                         {
                             TestStatusId = 2,
+                            Code = "",
                             QuestionId = 2,
                             SubmissionId = 1
                         },
                         new
                         {
                             TestStatusId = 3,
+                            Code = "",
                             QuestionId = 6,
                             SubmissionId = 1
                         });

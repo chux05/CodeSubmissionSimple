@@ -12,6 +12,8 @@ namespace CodeSubmissionSimple.Shared
         public int QuestionId { get; set; }
         public Question Question { get; set; }
 
+        public string Code { get; set; }
+
         public int SubmissionId { get; set; }
         public Submission Submission { get; set; }
     }
