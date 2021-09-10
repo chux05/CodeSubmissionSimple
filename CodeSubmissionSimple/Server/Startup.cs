@@ -1,3 +1,4 @@
+using CodeSubmissionSimple.Server.Configurations;
 using CodeSubmissionSimple.Server.Data;
 using CodeSubmissionSimple.Server.IRepositories;
 using CodeSubmissionSimple.Server.Repositories;
@@ -33,6 +34,8 @@ namespace CodeSubmissionSimple.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddAutoMapper(typeof(MapperInitializer));
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddControllers().AddNewtonsoftJson(op => op.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

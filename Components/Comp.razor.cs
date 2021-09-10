@@ -14,7 +14,7 @@ namespace Components
         public Question Question { get; set; }
 
         [Parameter]
-        public List<Question> SelectedQuestions { get; set; }
+        public List<TestStatus> SelectedQuestions { get; set; }
 
         public bool Toggle { get; set; } = false;
     }

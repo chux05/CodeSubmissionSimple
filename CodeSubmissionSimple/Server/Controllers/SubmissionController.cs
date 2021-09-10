@@ -14,12 +14,12 @@ namespace CodeSubmissionSimple.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SubmissionsController : ControllerBase
+    public class SubmissionController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public SubmissionsController(IUnitOfWork unitOfWork, IMapper mapper)
+        public SubmissionController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
