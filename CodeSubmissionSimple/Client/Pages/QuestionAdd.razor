@@ -1,0 +1,35 @@
+﻿@page "/assignquestion"
+@inject HttpClient Http
+
+<form method="post">
+    <table class="table">
+        <tr>
+            <th>Choose</th>
+            <th>Description</th>
+            <th>Language</th>
+            <th>Code Stub</th>
+        </tr>
+        @foreach (var question in Questions)
+        {
+            <tr>
+                <td>@question.QuestionId</td>
+                <td>@question.Description</td>
+                <td>@question.Langauge</td>
+                <td>@question.CodeStub</td>
+            </tr>
+        }
+    </table>
+    <button>Update</button>
+</form>
+
+@code {
+    private List<Question> Questions;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Questions = await Http.GetFromJsonAsync<List<Question>>("Question");
+    }
+
+
+    public List<Question> OrdersThisWeek { get; set; } = new List<Question>();
+}
