@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeSubmissionSimple.Server", "CodeSubmissionSimple\Server\CodeSubmissionSimple.Server.csproj", "{E063B5CC-269C-4987-A5A7-E7122BAAA26F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeSubmissionSimple.Server", "CodeSubmissionSimple\Server\CodeSubmissionSimple.Server.csproj", "{E063B5CC-269C-4987-A5A7-E7122BAAA26F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeSubmissionSimple.Client", "CodeSubmissionSimple\Client\CodeSubmissionSimple.Client.csproj", "{E9CECE9C-1E3E-4CAE-9B6E-032A10DC1819}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeSubmissionSimple.Client", "CodeSubmissionSimple\Client\CodeSubmissionSimple.Client.csproj", "{E9CECE9C-1E3E-4CAE-9B6E-032A10DC1819}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeSubmissionSimple.Shared", "CodeSubmissionSimple\Shared\CodeSubmissionSimple.Shared.csproj", "{3560CEA1-5174-40C6-8C7C-24086A25F705}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeSubmissionSimple.Shared", "CodeSubmissionSimple\Shared\CodeSubmissionSimple.Shared.csproj", "{3560CEA1-5174-40C6-8C7C-24086A25F705}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Components", "Components\Components.csproj", "{78407DAD-8524-49FD-840C-060C7D67BA21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Components", "Components\Components.csproj", "{78407DAD-8524-49FD-840C-060C7D67BA21}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
