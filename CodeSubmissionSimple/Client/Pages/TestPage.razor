@@ -1,0 +1,27 @@
+﻿@page "/testpage"
+@using CodeSubmissionSimple.Client.Services
+<h3>TestPage</h3>
+
+@if (Questions != null)
+{
+    foreach (var q in Questions)
+    {
+        <p>Question : @q.Description</p>
+        <p>Stub: @q.CodeStub</p>
+    }
+}
+
+@code {
+    [Inject]
+    IQuestionDataService _qClient { get; set; }
+    
+    List<Question> Questions { get; set; } = new List<Question>();
+
+
+
+    int counter = 0;
+    protected override async Task OnInitializedAsync()
+    {
+        Questions = await _qClient.GetAllQuestions();
+    }
+}

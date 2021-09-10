@@ -1,3 +1,5 @@
+using CodeQuestionSimple.Client.Services;
+using CodeSubmissionSimple.Client.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +20,7 @@ namespace CodeSubmissionSimple.Client
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-
+            builder.Services.AddScoped<IQuestionDataService, QuestionDataService>();
             await builder.Build().RunAsync();
         }
     }
