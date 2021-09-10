@@ -1,4 +1,5 @@
-﻿using CodeSubmissionSimple.Shared;
+﻿using CodeSubmissionSimple.Client.Services;
+using CodeSubmissionSimple.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,11 @@ namespace CodeSubmissionSimple.Client.Services
     {
 
         private readonly HttpClient _httpClient;
+        private readonly JsonSerializerOptions _options;
         public SubmissionDataService(HttpClient client)
         {
             _httpClient = client;
+            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         }
         public async Task<Submission> AddSubmission(Submission Submission)
         {
@@ -42,14 +45,32 @@ namespace CodeSubmissionSimple.Client.Services
             throw new NotImplementedException();
         }
 
-        public Task<Submission> GetSubmissionDetails(int SubmissionId)
+        public async Task<Submission> GetSubmissionDetails(int SubmissionId)
         {
-            throw new NotImplementedException();
+            var response = await _httpClient.GetAsync($"api/Submission/{SubmissionId}");
+            var content = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(content);
+            }
+
+            var submission = JsonSerializer.Deserialize<Submission>(content, _options);
+            return submission;
         }
 
-        public Task UpdateSubmission(Submission Submission)
+        public async Task<Submission> UpdateSubmission(Submission Submission)
         {
-            throw new NotImplementedException();
+            var SubmissionJson =
+               new StringContent(JsonSerializer.Serialize(Submission), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync($"api/Submission/{Submission.SubmissionId}", SubmissionJson);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<Submission>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return null;
         }
     }
 }
