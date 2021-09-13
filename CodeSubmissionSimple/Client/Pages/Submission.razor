@@ -1,14 +1,6 @@
-﻿@page "/Submission/{Answers?}"
-
-@foreach(var a in Answers)
-{
-    <p>@a.CodeStub</p>
-}
+﻿@page "/Submission/"
+<h3>Submission</h3>
 
 @code {
-   [Parameter]
-    public List<Question> Answers { get; set; } = new List<Question>();
 
 }
-
-

@@ -32,6 +32,24 @@ namespace CodeSubmissionSimple.Client.Services
             return null;
         }
 
-        
+        public Task DeleteSubmission(int SubmissionId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Submission>> GetAllSubmissions()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Submission> GetSubmissionDetails(int SubmissionId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateSubmission(Submission Submission)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
