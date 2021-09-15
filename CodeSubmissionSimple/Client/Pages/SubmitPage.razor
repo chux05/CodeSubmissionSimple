@@ -15,7 +15,7 @@
         height: 100vh;
         display: flex;
         flex-wrap: wrap;
-        background-color: #b0bec5;
+        background-color: #eceff1;
         border-radius: 5px;
     }
     
@@ -24,7 +24,6 @@
         width: 95%;
         height: 25%;
         margin: auto;
-        background-color: #808e95;
         border-radius: 1px solid #333;
         border-radius: 5px;
         display: flex;
@@ -36,7 +35,6 @@
         width: 95%;
         height: 65%;
         margin: auto;
-        background-color: #808e95;
         border-radius: 1px solid #333;
         border-radius: 5px;
         display: flex;
@@ -87,7 +85,7 @@
         width:90%;
         height:15%;        
         display:flex;
-        justify-content: flex-end;
+        justify-content: center;
         align-items: center;
         margin: auto;
     }
@@ -97,7 +95,7 @@
     }
 
     .submit-btn {
-       
+    margin-left: 5px;
     }
 
     .code {
@@ -106,7 +104,7 @@
         height: 70%;
         border: 1px solid #333;
         background-color: #fff;
-        padding: 10px;
+        padding: 1px;
         border-radius: 5px;
     }
 
@@ -144,6 +142,9 @@
         height: 100%;
         border:none;
         outline: none;
+        background-color: #000;
+        color: magenta;
+        padding: 10px;
     }
 
     .q-title{
@@ -169,7 +170,7 @@
                 <br>
                 @if (Quests.Count > counter)
                 {
-                    <p class="q-title">Question ( @(Quests[counter].Question.Langauge)):</p>
+                    <p class="q-title">Question (@(Quests[counter].Question.Langauge)):</p>
                     <p>
                      @(Quests[counter].Question.Description)
                     </p>
@@ -191,19 +192,17 @@
 
     <div class="code-wrapper">
 
+        <div class="code">
+            @if (Quests != null)
+            {
+                <textarea @bind="TempCode" rows="15" spellcheck="false"></textarea>
+            }
+        </div>
+        
         <div class="btn-container">
             <button class="run-btn btn btn-primary">Run</button>
             <button class="submit-btn btn btn-success" @onclick="Submit">Submit</button>
         </div>
-
-
-        <div class="code">
-            @if (Quests != null)
-            {
-                <textarea @bind="TempCode" rows="15"></textarea>
-            }
-        </div>
-
 
     </div>
 
