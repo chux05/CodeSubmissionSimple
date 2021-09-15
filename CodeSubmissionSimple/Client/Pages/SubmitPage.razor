@@ -172,15 +172,7 @@
     {
         Quests[counter].Code = TempCode;
         submission.isCompleted = true;
-        submission = await _sClient.UpdateSubmission(submission);
-
-        if (submission != null)
-        {
-            TempCode = "Completed";
-        }
-        else
-        {
-            TempCode = "eish";
-        }
+        await _sClient.UpdateSubmission(submission);
+        TempCode = "Updated";
     }
 }

@@ -58,19 +58,19 @@ namespace CodeSubmissionSimple.Client.Services
             return submission;
         }
 
-        public async Task<Submission> UpdateSubmission(Submission Submission)
+        public async Task UpdateSubmission(Submission Submission)
         {
             var SubmissionJson =
                new StringContent(JsonSerializer.Serialize(Submission), Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PutAsync($"api/Submission/{Submission.SubmissionId}", SubmissionJson);
+             await _httpClient.PutAsync($"api/Submission/{Submission.SubmissionId}", SubmissionJson);
 
-            if (response.IsSuccessStatusCode)
-            {
-                return await JsonSerializer.DeserializeAsync<Submission>(await response.Content.ReadAsStreamAsync());
-            }
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    return await JsonSerializer.DeserializeAsync<Submission>(await response.Content.ReadAsStreamAsync(),_options);
+            //}
 
-            return null;
+            //return null;
         }
     }
 }
