@@ -9,6 +9,7 @@ namespace CodeSubmissionSimple.Server.Models
     public class TestStatusDto
     {
         public int TestStatusId { get; set; }
+        public string Code { get; set; }
         public int QuestionId { get; set; }
         public QuestionDto Question { get; set; }
 

@@ -1,5 +1,8 @@
-﻿@page "/Submission/"
+﻿@page "/SubmissionPage/"
 @using CodeSubmissionSimple.Client.Services
+@using CodeSubmissionSimple.Shared
+@inject HttpClient Http
+
 <h3>Test Environment</h3>
 <style>
     .container {
@@ -58,10 +61,12 @@
         width: 40%;
     }
 </style><label>Temp code : @TempCode</label>
+
 <div class="container-fluid wrapper">
+
     <div class="left">
         <!--TextArea-->
-        @if (Questions != null)
+        @if (Quests != null)
         {
             <textarea @bind="TempCode" rows="15"></textarea>
         }
@@ -69,12 +74,12 @@
     </div>
     <div class="border-left right">
         <!--Question-->
-        @if (Questions != null)
+        @if (Quests != null)
         {
             <br>
-            @if (Questions.Count > counter)
+            @if (Quests.Count > counter)
             {
-                <p><h4>Question:</h4> <br />@(Questions[counter].Description)</p>
+                <p><h4>Question:</h4> <br />@(Quests[counter].Question.Description)</p>
             }
 
         }
@@ -101,11 +106,10 @@
 
 @code {
     [Inject]
-    IQuestionDataService _qClient { get; set; }
     ISubmisstionDataService _sClient { get; set; }
 
-    Submission submission { get; set; } = new Submission();
-    List<Question> Questions { get; set; } = new List<Question>();
+    private Submission submission;
+    List<TestStatus> Quests { get; set; }
 
     string TempCode { get; set; } = "";
 
@@ -113,37 +117,42 @@
     int Length { get; set; } = 0;
     protected override async Task OnInitializedAsync()
     {
-        //figure out which method to call.
-        counter = 0;
-        Length = submission.
-        Length = Questions.Count();
-        setStub(counter);
+        //gets the submission model from the ID num
+        submission = await Http.GetFromJsonAsync<Submission>($"api/Submission/1");
+
+        if (submission != null)
+        {
+            Quests = submission.Answers;
+            counter = 0;
+            Length = Quests.Count();
+            setStub(counter);
+        }
+        else
+        {
+            // need to do
+        }
     }
 
     private void setStub(int counter)
     {
+
         if (counter > 0 || counter < Length)
         {
-            TempCode = Questions[counter].CodeStub;
+            if (string.IsNullOrEmpty(Quests[counter].Code))
+            {
+                TempCode = Quests[counter].Question.CodeStub;
+            }
+            else
+            {
+                TempCode = Quests[counter].Code;
+            }
+
         }
     }
 
-    private string getStub(int counter)
-    {
-        string code = "";
-        if (counter >= 0 || counter < Length)
-        {
-            code = Questions[counter].CodeStub;
-        }
-        else
-        {
-
-        }
-        return code;
-    }
     private void Previous()
     {
-        Questions[counter].CodeStub = TempCode;
+        Quests[counter].Code = TempCode;
         if (counter > 0)
         {
             --counter;
@@ -152,15 +161,26 @@
     }
     private void Next()
     {
-        Questions[counter].CodeStub = TempCode;
+        Quests[counter].Code = TempCode;
         if (counter < Length)
         {
             ++counter;
         }
         setStub(counter);
     }
-    private void Submit()
+    private async Task Submit()
     {
-        //navigate to submission page
+        Quests[counter].Code = TempCode;
+        submission.isCompleted = true;
+        submission = await _sClient.UpdateSubmission(submission);
+
+        if (submission != null)
+        {
+            TempCode = "Completed";
+        }
+        else
+        {
+            TempCode = "eish";
+        }
     }
 }

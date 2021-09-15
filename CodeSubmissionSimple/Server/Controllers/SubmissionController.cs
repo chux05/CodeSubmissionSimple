@@ -111,15 +111,22 @@ namespace CodeSubmissionSimple.Server.Controllers
 
             try
             {
-                var originalSubmission = await _unitOfWork.Submissions.Get(q => q.SubmissionId == id);
+                var originalSubmission = await _unitOfWork.Submissions.GetSubmissionWithQuestions(id);
 
                 if (originalSubmission == null)
                 {
                     return BadRequest("Submitted data is invalid");
                 }
 
-                _mapper.Map(submissionDto, originalSubmission);
-                _unitOfWork.Submissions.Update(originalSubmission);
+               var submision = _mapper.Map(submissionDto, originalSubmission);
+                _unitOfWork.Submissions.Update(submision);
+
+                //bad practice, need to figure to do this in a better way
+                for (int i = 0; i < originalSubmission.Answers.Count; i++)
+                {
+                    _unitOfWork.TestStatuses.Update(submision.Answers[i]);
+                }
+
                 await _unitOfWork.Save();
 
                 return NoContent();

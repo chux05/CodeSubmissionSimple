@@ -11,8 +11,6 @@ namespace CodeSubmissionSimple.Server.Models
 
         public bool isCompleted { get; set; }
 
-        public string Code { get; set; }
-
         public CandidateDto Candidate { get; set; }
 
         public List<TestStatusDto> Answers { get; set; }
