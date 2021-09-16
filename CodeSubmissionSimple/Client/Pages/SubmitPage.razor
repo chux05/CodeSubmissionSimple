@@ -328,7 +328,9 @@ else
     protected override async Task OnInitializedAsync()
     {
         //gets the submission model from the ID num
-        submission = await Http.GetFromJsonAsync<Submission>($"api/Submission/2");
+        submission = await Http.GetFromJsonAsync<Submission>($"api/Submission/1");
+
+
 
         if (submission != null)
         {
