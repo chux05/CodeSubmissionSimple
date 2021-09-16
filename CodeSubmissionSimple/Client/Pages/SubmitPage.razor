@@ -2,6 +2,7 @@
 @using CodeSubmissionSimple.Client.Services
 @using CodeSubmissionSimple.Shared
 @inject HttpClient Http
+@inject NavigationManager navigationManager
 
 
 <style>
@@ -18,7 +19,7 @@
         background-color: #eceff1;
         border-radius: 5px;
     }
-    
+
 
     .question-wrapper {
         width: 95%;
@@ -40,7 +41,7 @@
         display: flex;
         flex-direction: column;
     }
-@* 
+@*
     .questions-list {
         width: 25%;
         height: 25%;
@@ -83,7 +84,7 @@
 
     .btn-container {
         width:90%;
-        height:15%;        
+        height:15%;
         display:flex;
         justify-content: center;
         align-items: center;
@@ -111,7 +112,7 @@
     @* .title{
 
         width:90%;
-        height:15%;               
+        height:15%;
         margin: auto;
     }
 
@@ -152,43 +153,80 @@
         font-size: 18px;
     }
 
+    .candidate{
+        margin-left:40vh;
+    }
+
+    .top-wrapper{
+        display: flex;
+    }
+    .top-title{
+        width: 35%;
+    }
+
+    .progressbar {
+        width: 35%;
+        background-color: grey;
+    }
+
+    .testprogress {
+        background-color: forestgreen;
+        width: var(--my-width);
+        height: 100%;
+        transition: 0.35s all ease-in-out;
+    }
+
 </style>
+@if (submission != null && !completed)
+{
+    <div class="top-wrapper">
+        <div class="top-title"> <h3>Xebec - Testing Environment</h3></div>
 
-<h3>Xebec - Testing Environment</h3>
+        @{
+            int counte = counter + 1;
+            <div class="progressbar">
+                <div class="testprogress" style="--my-width: @width"> progress: @counte of @Length </div>
+            </div>
+        }
+        <div class="candidate">
+            @submission.Candidate.Name @submission.Candidate.Surname
+        </div>
+    </div>
+    <div class="main-wrapper">
 
+        <div class="question-wrapper">
 
-<div class="main-wrapper">
-
-    <div class="question-wrapper">
-
-        <button class="prev-btn btn btn-primary" @onclick="Previous">Prev</button>
-
-        <div class="question">
-
-            @if (Quests != null)
+            @if (counter > 0)
             {
-                <br>
-                @if (Quests.Count > counter)
+                <button class="prev-btn btn btn-primary" @onclick="Previous">Prev</button>
+            }
+            <div class="question">
+
+                @if (Quests != null)
                 {
-                    <p class="q-title">Question (@(Quests[counter].Question.Langauge)):</p>
-                    <p>
-                     @(Quests[counter].Question.Description)
-                    </p>
+                    <br>
+                    @if (Quests.Count > counter)
+                    {
+                        <p class="q-title">Question (@(Quests[counter].Question.Langauge)):</p>
+                        <p>
+                            @(Quests[counter].Question.Description)
+                        </p>
+                    }
+
                 }
 
+            </div>
+            @if (counter < Length - 1)
+            {
+                <button class="next-btn btn btn-success" @onclick="Next">Next</button>
             }
-
         </div>
+        @*
+            <div class="questions-list">
 
-        <button class="next-btn btn btn-success" @onclick="Next">Next</button>
+                <div class="list"></div>
 
-    </div>
-@* 
-    <div class="questions-list">
-
-        <div class="list"></div>
-
-    </div> *@
+            </div> *@
 
     <div class="code-wrapper">
 
@@ -198,25 +236,34 @@
                 <textarea @bind="TempCode" rows="15" spellcheck="false"></textarea>
             }
         </div>
-        
-        <div class="btn-container">
-            <button class="run-btn btn btn-primary">Run</button>
-            <button class="submit-btn btn btn-success" @onclick="Submit">Submit</button>
-        </div>
-
+        @if (counter >= Length - 1)
+        {
+            <div class="btn-container">
+                <button class="run-btn btn btn-primary">Run</button>
+                <button class="submit-btn btn btn-success" @onclick="Submit">Submit</button>
+            </div>
+        }
     </div>
 
-    @* <div class="output-wrapper">
+        @* <div class="output-wrapper">
 
-        <div class="title">
-            <h3>Sample</h3>
-        </div>
-        <div class="output"></div>
+                <div class="title">
+                    <h3>Sample</h3>
+                </div>
+                <div class="output"></div>
 
-    </div> *@
+            </div> *@
 
-</div>
-
+    </div>
+}
+else
+{
+    <h2>Loading...</h2>
+    if (submission != null)
+    {
+        Dones();
+    }
+}
 
 @* <div class="container-fluid wrapper">
 
@@ -276,10 +323,12 @@
 
     int counter { get; set; } = 0;
     int Length { get; set; } = 0;
+    bool completed { get; set; } = true;
+    string width { get; set; } = "200px";
     protected override async Task OnInitializedAsync()
     {
         //gets the submission model from the ID num
-        submission = await Http.GetFromJsonAsync<Submission>($"api/Submission/1");
+        submission = await Http.GetFromJsonAsync<Submission>($"api/Submission/2");
 
         if (submission != null)
         {
@@ -287,10 +336,7 @@
             counter = 0;
             Length = Quests.Count();
             setStub(counter);
-        }
-        else
-        {
-            // need to do
+            completed = submission.isCompleted;
         }
     }
 
@@ -307,6 +353,7 @@
             {
                 TempCode = Quests[counter].Code;
             }
+            width = ((counter + 1) / (Length * 1.0) * 100).ToString() + "%";
 
         }
     }
@@ -334,6 +381,11 @@
         Quests[counter].Code = TempCode;
         submission.isCompleted = true;
         await _sClient.UpdateSubmission(submission);
-        TempCode = "Updated";
+        navigationManager.NavigateTo("/Done");
+    }
+
+    void Dones()
+    {
+        navigationManager.NavigateTo("/alreadyDone");
     }
 }
